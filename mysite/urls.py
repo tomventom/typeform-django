@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    url(r'^$', RedirectView.as_view(url='/account/', permanent=False)),
-    url(r'^account/', include('accounts.urls')),
+    url(r'^$', RedirectView.as_view(url='/register/', permanent=False)),
+    url(r'^register/', include('accounts.urls')),
     url(r'^admin/', admin.site.urls),
 ]

@@ -1,8 +1,7 @@
 from django.conf.urls import url
 
-from accounts.views import HomeView, RegisterView
+from accounts.views import RegisterView
 
 urlpatterns = [
-    url(r'^$', HomeView.as_view(), name = "home"),
-    url(r'^register/$', RegisterView.as_view(), name = "register"),
+    url(r'^$', RegisterView.as_view(), name = "register"),
 ]

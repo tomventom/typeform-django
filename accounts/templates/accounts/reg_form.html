@@ -1,18 +1,56 @@
-{% extends "base.html" %}
+{% load static %}
 
-{% block title %}Register{% endblock %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+        <title>Register</title>
+        <link rel="stylesheet" href="{% static 'accounts/css/bootstrap.min.css' %}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-dark" style="background-color: #66cdcc;">
+            <div class="container my-3">
+                <span class="navbar-brand mb-0 h1"><h1 class="display-4">Register</h1></span>
+            </div>
+        </nav>
+    <div class="container mt-5">
 
-{% block content %}
-    <h1>Register</h1>
-    <hr>
-    <div>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <div>
-                    <button type="submit">Sign up</button>
+        <form class="col-md-auto pl-0" method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="form-group">
+                    <div class="row">
+                    <div class="col-sm-3">
+                    {{ field.label_tag }}
+                    </div>
+                    <div class="col-md-3">
+                    {{ field }}
+                    </div>
+
+                    {% if field.errors %}
+                    <div class="col">
+                    <div class="alert alert-danger" role="alert">
+                        {{ field.errors.as_text }}
+                    </div>
+                    </div>
+                    {% endif %}
+                    </div>
                 </div>
-            </form>
+            {% endfor %}
+
+            <div class="form-group">
+                <button class="btn mt-3" style="background-color: #ff9900; color: white;" type="submit">Sign up</button>
+            </div>
+        </form>
 
     </div>
-{% endblock %}
+
+    <script>
+        $('input').addClass('form-control');
+    </script>
+        <script src="{% static 'accounts/js/bootstrap.min.js' %}"></script>
+    </body>
+</html>
