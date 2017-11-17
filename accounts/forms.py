@@ -1,12 +1,20 @@
 from django import forms
 from .models import Client
-# from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget
 
 class ClientCreationForm(forms.ModelForm):
 
     class Meta:
         model = Client
         fields = ('email', 'full_name', 'company_name' , 'industry', 'position', 'city_headquarters', 'num_employees', 'phone_number')
+        widgets = {
+            'phone_number': PhoneNumberInternationalFallbackWidget(),
+        }
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if not email:
+            raise forms.ValidationError("Enter an Email address")
+        return email.lower()
 
     def clean_full_name(self):
         full_name = self.cleaned_data.get("full_name")
@@ -29,7 +37,7 @@ class ClientCreationForm(forms.ModelForm):
     def clean_position(self):
         position = self.cleaned_data.get("position")
         if not position:
-            raise forms.ValidationError("Enter a position")
+            raise forms.ValidationError("Enter your position")
         return position
 
     def clean_city_headquarters(self):
@@ -52,9 +60,8 @@ class ClientCreationForm(forms.ModelForm):
             raise forms.ValidationError("Enter a phone number")
         return phone_number
 
-    def save(self, commit=True):
-        client = super(ClientCreationForm, self).save(commit=False)
-        client.set_unusable_password()
-        if commit:
+    def save(self):
+        client = super(ClientCreationForm, self)
+        if client.is_valid():
             client.save()
         return client
