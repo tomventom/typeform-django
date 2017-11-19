@@ -10,7 +10,7 @@ class Client(models.Model):
     city_headquarters   = models.CharField(max_length=254, blank=False)
     num_employees       = models.IntegerField(blank=False)
     phone_number        = PhoneNumberField(blank=False)
-    timestamp   = models.DateTimeField(auto_now_add=True)
+    timestamp           = models.DateTimeField(auto_now_add=True, verbose_name="Registered at")
 
     def __str__(self):
         return self.email
